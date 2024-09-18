@@ -4,11 +4,12 @@ class BooksController < ApplicationController
   end
 
   def create
+    # binding.irb
     @book = Book.new(book_params)
     @book.user_id = current_user.id
     @book.save
 
-    redirect_to book_path
+    redirect_to user_path(current_user)
   end
 
   def index
@@ -16,9 +17,6 @@ class BooksController < ApplicationController
 
   def show
   end
-
-
-
 
 
 
