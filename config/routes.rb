@@ -3,11 +3,13 @@ Rails.application.routes.draw do
   root to: 'homes#top'
   devise_for :users
   get '/homes/about' => "homes#about", as: "about"
-  post '/users/:id', to: 'books#create'
+  post '/users/:id', to: 'books#edit'
+  post '/users/:id/edit', to: 'users#update'
+  delete 'logout', to: 'sessions#destroy'
 
 
   resources :books, only: [:new, :create, :index, :show]
-  resources :users, only: [:show, :edit]
+  resources :users, only: [:index, :show, :edit, :update]
 
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
