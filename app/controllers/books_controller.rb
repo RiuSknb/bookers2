@@ -17,9 +17,9 @@ class BooksController < ApplicationController
   end
 
   def show
-    @user = current_user
-    @books = @user.books
-    @book = Book.find(params[:id])
+    @book = Book.find(params[:id])  # Bookを先に取得
+    @user = @book.user              # Bookに関連するUserを取得
+    @books = @user.books            # そのUserが所有している本の一覧を取得
   end
 
   def edit
