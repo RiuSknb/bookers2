@@ -1,4 +1,8 @@
 class BooksController < ApplicationController
+  before_action :set_book, only: [:edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
+
+
   def new
     @book = Book.new
   end
@@ -30,11 +34,9 @@ class BooksController < ApplicationController
   end
 
   def edit
-    @book = Book.find(params[:id])
   end
 
   def update
-    @book = Book.find(params[:id])
     if @book.update(book_params)
       redirect_to @book, notice: 'You have updated book successfully.'
     else
@@ -52,10 +54,15 @@ class BooksController < ApplicationController
     # 投稿データのストロングパラメータ
   private
 
+  def set_book
+    @book = Book.find(params[:id])
+  end
+
+  def authorize_user!
+    redirect_to books_path, alert: 'You are not authorized to edit this book.' unless current_user == @book.user
+  end
+
   def book_params
     params.require(:book).permit(:title, :body)
   end
-
-
-
 end
