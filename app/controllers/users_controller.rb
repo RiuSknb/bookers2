@@ -24,10 +24,9 @@ class UsersController < ApplicationController
       redirect_to user_path(current_user.id), notice: "You have updated user successfully."
     else
     # バリデーションエラーがある場合、エラーメッセージを表示して編集画面に戻る
-      flash[:error] = "更新に失敗しました"
       render :edit
+    end
   end
-end
 
   def set_user
     @user = User.find(params[:id])

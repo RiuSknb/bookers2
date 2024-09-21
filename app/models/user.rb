@@ -6,6 +6,14 @@ class User < ApplicationRecord
 
   has_many :books, dependent: :destroy
 
+
+  # nameカラムのバリデーション
+  validates :name, presence: true, uniqueness: true, length: { in: 2..20 }
+
+  # introductionカラムのバリデーション
+  validates :introduction, length: { maximum: 50 }
+
+
   attribute :introduction
 
   has_one_attached :profile_image

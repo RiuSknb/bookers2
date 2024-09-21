@@ -14,7 +14,13 @@
   <body>
     <%= render 'layouts/header' %>   <!-- ここを追記 -->
     <main>                           <!-- ここを追記 -->
-     <%= yield %>
+      <% flash.each do |key, value| %>
+        <div>
+          <%= value %>
+        </div>
+      <% end %>
+
+      <%= yield %>
     </main>                          <!-- ここを追記 -->
     <%= render 'layouts/footer' %>   <!-- ここを追記 -->
   </body>
