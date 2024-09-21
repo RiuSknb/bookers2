@@ -18,11 +18,7 @@
       </table>
 
         <div class='row'>
-          <% if @user == current_user %>
-            <%= link_to raw('<i class="fa-solid fa-user-gear"></i>'), edit_user_path(@user), class: "btn btn-outline-secondary btn-block mt-3"%>
-          <% else %>
-            <%= link_to raw('<i class="fa-solid fa-user-gear"></i>'), user_path(current_user.id), class: "btn btn-outline-secondary btn-block mb-3" %>
-          <% end %>
+          <%= link_to raw('<i class="fa-solid fa-user-gear"></i>'), edit_user_path(@user), class: "btn btn-outline-secondary btn-block mt-3"%>
         </div>
 
 
