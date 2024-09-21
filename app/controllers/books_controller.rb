@@ -12,8 +12,8 @@ class BooksController < ApplicationController
 
   def index
     @user = current_user
-    @books = @user.books
-    @book = Book.find(params[:id])
+    @books = Book.all
+    @users = User.all
   end
 
   def show
@@ -22,7 +22,24 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
   end
 
+  def edit
+    @book = Book.find(params[:id])
+  end
 
+  def update
+    @book = Book.find(params[:id])
+    if @book.update(book_params)
+      redirect_to @book, notice: 'You have updated book successfully.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @book = Book.find(params[:id])
+    @book.destroy
+    redirect_to books_path, notice: 'Book was successfully deleted.'
+  end
 
 
     # 投稿データのストロングパラメータ

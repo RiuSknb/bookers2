@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update]
+  before_action :authorize_user!, only: [:edit, :update]
+
 
   def show
     @user = User.find(params[:id])
@@ -6,22 +9,19 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    # @user = User.find(params[:id])
+    # @userはbefore_actionでセットされているので、ここでは特に何もしなくて大丈夫です
   end
-  
+
   def index
     @users = User.all
+    @user = current_user
   end
-  # def update
-  #   @user = User.find(params[:id])
-  #   @user.update(user_params)
-  #   redirect_to user_path(current_user.id)
-  # end
+
   def update
     @user = User.find(params[:id])
-    puts "introductionの値: #{params[:user][:introduction]}"
     if @user.update(user_params)
-      redirect_to user_path(current_user.id)
+      redirect_to user_path(current_user.id), notice: "You have updated user successfully."
     else
     # バリデーションエラーがある場合、エラーメッセージを表示して編集画面に戻る
       flash[:error] = "更新に失敗しました"
@@ -29,6 +29,16 @@ class UsersController < ApplicationController
   end
 end
 
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def authorize_user!
+    unless current_user.id == @user.id
+      flash[:alert] = "他のユーザーのプロフィールを編集する権限がありません。"
+      redirect_to user_path(current_user)
+    end
+  end
 
 
   private
